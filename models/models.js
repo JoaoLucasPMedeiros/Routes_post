@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const connection = require('../db/connection');
 
-const contas = connection.define('pagar', {
+const pagar = connection.define('pagar', {
     nome: {
         type: Sequelize.STRING,
     },
@@ -9,6 +9,7 @@ const contas = connection.define('pagar', {
         type: Sequelize.DOUBLE,
     }
 });
+/*  pagar.sync({ force: true }); */
 
-module.exports = contas;
+module.exports = pagar;
 

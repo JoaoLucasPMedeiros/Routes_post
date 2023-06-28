@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pagar = require('../models/models')
+const bodyParser = require('body-parser');
 
 //rota de get
 router.get('/get', (res,req) =>{
@@ -9,16 +10,23 @@ router.get('/get', (res,req) =>{
 
 //rota 
 
+router.post('/post', (res,req)=>{
 
-router.post('/post', (res,req) =>{
-let {nome, valor} =req.body;
+   
+    pagar.create({
+        
+        nome: req.body,
+        valor: req.body
+    })
 
-pagar.create({
-    nome,valor
-})
-.then(() => res.send('ok'))
 
-
+    .then(()=>{
+        req.send('Ok')
+    })
+    .catch((error) =>{
+        req.send(`Erro no post ${error}`)
+    })
 });
+
 
 module.exports = router;
