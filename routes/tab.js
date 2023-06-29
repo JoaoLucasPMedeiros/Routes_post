@@ -1,32 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const pagar = require('../models/models')
-const bodyParser = require('body-parser');
+
 
 //rota de get
 router.get('/get', (res,req) =>{
     req.send('Rota get ok');
 });
 
-//rota 
 
-router.post('/post', (res,req)=>{
 
-   
+router.post('/post', (req, res) => {
+    const { nome, valor } = req.body; // Acessa as propriedades corretas do req.body
+  
     pagar.create({
-        
-        nome: req.body,
-        valor: req.body
+      nome: nome, // Atribui o valor corretamente
+      valor: valor, // Atribui o valor corretamente
     })
-
-
-    .then(()=>{
-        req.send('Ok')
-    })
-    .catch((error) =>{
-        req.send(`Erro no post ${error}`)
-    })
-});
-
+      .then(() => {
+        res.redirect('/');
+      })
+      .catch((error) => {
+        res.send(`Erro no post ${error}`);
+      });
+  });
+  
 
 module.exports = router;

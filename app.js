@@ -5,20 +5,31 @@ const routes = require('./routes/tab');
 const connection = require('./db/connection');
 const bodyParser = require('body-parser');
 const contas = require('./models/models');
+const handlebars = require("express-handlebars")
+const path = require('path')
 
 //INICIANDO APP
 app.listen(PORT, ()=>{
     console.log('Express rodando na porta '+ PORT)
 });
 
-//USANDO O BODY PARSER
+//USANDO O BODY PARSER - PARA RECEBER AQUIVOS JSON, SEM ISSO BANCO NÃO CONVERSAM (VAR =bodyparser )
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 
+//HANDLEBARS -( var = handlebars-express , var = path)
+app.engine('handlebars', handlebars.engine({defaultLayout: 'main' 
+}))
+app.set('view engine','handlebars');
+app.set('views', path.join(__dirname,'views'));
+
 //ROTA DE TESTE
 app.get('/', (req,res) =>{
-    res.send('Teste de rota ok')
+    res.render('index')
 });
+
+
+
 
 //VALIDANDO CONEXÃO COM BANCO
 
