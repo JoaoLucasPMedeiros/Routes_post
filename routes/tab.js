@@ -9,21 +9,24 @@ router.get('/get', (res,req) =>{
 });
 
 
+//rota que add no banco 
+router.post("/post" , (req,res) =>{
+  const {nome, valor} = req.body;
 
-router.post('/post', (req, res) => {
-    const { nome, valor } = req.body; // Acessa as propriedades corretas do req.body
-  
-    pagar.create({
-      nome: nome, // Atribui o valor corretamente
-      valor: valor, // Atribui o valor corretamente
-    })
-      .then(() => {
-        res.redirect('/');
-      })
-      .catch((error) => {
-        res.send(`Erro no post ${error}`);
-      });
-  });
+
+  pagar.create({
+    nome:nome,
+    valor:valor
+  })
+  .then(()=>{
+    res.send('DADOS INSERIDOS COM SUCESSO')
+  })
+  .catch((error)=>{
+    console.log(`erro na rota post ${error}`)
+  })
+
+
+});
   
 
 module.exports = router;

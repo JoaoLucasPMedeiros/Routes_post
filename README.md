@@ -1,4 +1,4 @@
-# Inserindo dados no banco usando Sequelize
+# Criando uma rota POST para inserir dados no banco
 
 ## 1 - Criar a conexão com o banco passando os paramentos, nome do banco, usuario, senha, local e tipo do banco
     const Sequelize = require('sequelize');
@@ -41,9 +41,28 @@
     module.exports = contas;
 
 
-## 3- Criar uma rota do tipo "POST" para inserir dados no banco, antes é necessario installar o "Body-parse", inserir-lo no nosso app
+## 3- Antes de criar uma rota do tipo "POST" para inserir dados no banco é necessario installar o "Body-parse" para receber arquivos JSON, inserir-lo no nosso app
   
-    const bodyParser = require('body-parser');
     app.use(bodyParser.urlencoded({extended:false}))
+    app.use(bodyParser.json());
 
+## 4 - Criaremos uma rota do tipo POST para inserir dados no banco, usando o objeto "create", antes de usa-lo precisamos definir uma variavel que receba esses dados da requisição.
+  
+    const {nome, valor} = req.body;
+    //outra forma para criar variaveis
+    const nome = req.body;
+    const valor = req.body;
+## agora usaremos o "create" junto ao nosso "Models"
+    pagar.create({
+    nome:nome,
+    valor:valor
+    })
+  .then(()=>{
+    res.send('DADOS INSERIDOS COM SUCESSO')
+  })
+  .catch((error)=>{
+    console.log(`erro na rota post ${error}`)
+  })
+
+  
 
